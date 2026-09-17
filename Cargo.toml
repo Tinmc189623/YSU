@@ -1,7 +1,9 @@
+# 版本号与同目录 version.toml 里的 kernel_version 是同一个数。Cargo 只认
+# 三段式的 semver，所以这里写成 21.0.0；程序里报的是清单里的 21.0。
 [package]
 name = "ysu"
 description = "YSU —— 网页渲染内核：HTML 与 CSS 解析、样式计算、布局、绘制与网络"
-version = "0.1.0"
+version = "21.0.0"
 edition = "2024"
 license = "Apache-2.0"
 rust-version = "1.98"

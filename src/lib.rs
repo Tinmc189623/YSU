@@ -33,5 +33,34 @@ pub use engine::Engine;
 /// 内核名称。
 pub const ENGINE_NAME: &str = "YSU";
 
-/// 内核版本。
-pub const ENGINE_VERSION: &str = env!("CARGO_PKG_VERSION");
+/// 内核版本，来自仓库根的 `version.toml`。
+pub const ENGINE_VERSION: &str = env!("YSU_KERNEL_VERSION");
+
+#[cfg(test)]
+mod tests {
+    use super::ENGINE_VERSION;
+
+    /// 内核版本号必须真的来自清单，而不是悄悄退回了 Cargo 里的号。
+    ///
+    /// `build.rs` 在清单里找不到那个键时会安静地退回 `CARGO_PKG_VERSION`，
+    /// 界面上看不出来——版本号照样有，只是错的。这条把它拦下来。
+    ///
+    /// 清单不在时（这个 crate 被单独拿出去发布）跳过：那种情况下退回 Cargo
+    /// 的版本号正是预期行为。
+    #[test]
+    fn version_comes_from_the_manifest() {
+        let manifest = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../version.toml");
+        let Ok(text) = std::fs::read_to_string(&manifest) else {
+            return;
+        };
+        let declared = text.lines().find_map(|line| {
+            let (name, value) = line.split_once('=')?;
+            (name.trim() == "kernel_version").then(|| value.trim().trim_matches('"').to_string())
+        });
+        assert_eq!(
+            declared.as_deref(),
+            Some(ENGINE_VERSION),
+            "清单里的 kernel_version 与嵌入程序的 ENGINE_VERSION 对不上"
+        );
+    }
+}
