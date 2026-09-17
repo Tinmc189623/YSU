@@ -1,0 +1,29 @@
+[package]
+name = "ysu"
+description = "YSU —— 网页渲染内核：HTML 与 CSS 解析、样式计算、布局、绘制与网络"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+rust-version = "1.98"
+
+[dependencies]
+url = "2.5"
+encoding_rs = "0.8"
+cosmic-text = "0.19"
+wgpu = "30"
+rustls = "0.23"
+webpki-roots = "1.0"
+
+[dev-dependencies]
+pollster = "1.0"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
