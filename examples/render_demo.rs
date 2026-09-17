@@ -18,7 +18,7 @@ const PAGE: &str = r#"<!DOCTYPE html>
   footer { background: #1a202c; color: white; padding: 10px; text-align: center; }
 </style></head>
 <body>
-  <header><h1>Vexo 渲染演示</h1></header>
+  <header><h1>YSU 渲染演示</h1></header>
   <main>
     <div class="card"><p>这是一段普通的段落文字，用来验证排版、断行与绘制命令是否正确。</p></div>
     <div class="row">

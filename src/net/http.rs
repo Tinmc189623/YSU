@@ -383,10 +383,10 @@ mod tests {
     fn extra_headers_are_written() {
         let request = Request::get(url("http://example.com/"))
             .header("Accept", "text/html")
-            .header("User-Agent", "Vexo");
+            .header("User-Agent", "YSU");
         let text = String::from_utf8(request.to_bytes()).expect("是文本");
         assert!(text.contains("Accept: text/html\r\n"));
-        assert!(text.contains("User-Agent: Vexo\r\n"));
+        assert!(text.contains("User-Agent: YSU\r\n"));
     }
 
     #[test]

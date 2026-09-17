@@ -183,11 +183,9 @@ impl Client {
 
         Self {
             tls: Arc::new(config),
-            user_agent: format!(
-                "Vexo/{} YSU/{}",
-                env!("CARGO_PKG_VERSION"),
-                env!("CARGO_PKG_VERSION")
-            ),
+            // 默认的 User-Agent 只报内核自己的名字与版本。谁在用这个内核、
+            // 外面的产品叫什么，是调用方的事，它想改就经 set_user_agent 改。
+            user_agent: format!("YSU/{}", env!("CARGO_PKG_VERSION")),
             timeout: Duration::from_secs(20),
             max_redirects: 10,
             max_body: 16 * 1024 * 1024,
